@@ -1,0 +1,42 @@
+from AUTOclui import *
+cl()
+system="sp" 
+ld(system)
+r=run()
+niteracion=1
+datafile="sp_fixed_"+str(niteracion).zfill(5)
+sv(datafile) 
+tableBP=[]
+for solution in r("BP"): 
+   tableBP.append([datafile,solution["Label"]])
+#Cambiar para bifuracar
+ch("NTST",180)
+ch("ISW",-1)
+ch("DS",1e-3) 
+#iteracion
+while len(tableBP)>0:
+  niteracion=niteracion+1
+  rama=tableBP.pop(0)
+  ch("IRS",rama[1])
+  ld(s=rama[0])
+  r=run()
+  datafile="sp_fixed_"+str(niteracion).zfill(5)
+  sv(datafile)
+  for solution in r("BP"): 
+     tableBP.append([datafile,solution["Label"]])
+  f=open("DAT/"+datafile+"_up.txt",'w')
+  for j in range(len(r[0]['PAR(3)'])):
+     f.write(str(r[0]['PAR(3)'][j])+" "+str(r[0]['PAR(4)'][j])+" "+str(r[0]['PAR(5)'][j])+" "+str(r[0]['PAR(6)'][j])+"\n")
+  f.close()
+  ch("DS",-pr("DS"))
+  r=run()
+  ap(datafile)
+  for solution in r("BP"): 
+     tableBP.append([datafile,solution["Label"]])
+  f=open("DAT/"+datafile+"_down.txt",'w')
+  for j in range(len(r[0]['PAR(3)'])):
+     f.write(str(r[0]['PAR(3)'][j])+" "+str(r[0]['PAR(4)'][j])+" "+str(r[0]['PAR(5)'][j])+" "+str(r[0]['PAR(6)'][j])+"\n")
+  f.close()
+  if(rama[0]!=tableBP[0][0]):
+     dl(rama[0])
+  ch("DS",-pr("DS"))
