@@ -1,0 +1,29 @@
+# Auto Files with Continuation # 
+################################
+b.*
+s.*
+d.*
+
+# Files with the continuation on the fixed points subspace  # 
+#############################################################
+
+DAT/*
+
+
+# Compiled source #
+###################
+*.exe
+*.o
+*.out
+
+
+
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db 
